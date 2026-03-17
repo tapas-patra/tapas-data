@@ -4,7 +4,7 @@ label: Technical Skills
 entries:
   - id: languages
     category: Languages
-    icon: "\U0001F4BB"
+    icon: "💻"
     from_github: true
     text: >
       Python (Advanced) — my primary language for backend, automation, and AI.
@@ -14,7 +14,7 @@ entries:
 
   - id: backend
     category: Backend and APIs
-    icon: "\u2699\uFE0F"
+    icon: "⚙️"
     skills:
       - name: FastAPI
         proficiency: expert
@@ -42,7 +42,7 @@ entries:
 
   - id: ai-ml
     category: AI and Machine Learning
-    icon: "\U0001F9E0"
+    icon: "🧠"
     skills:
       - name: RAG
         proficiency: advanced
@@ -67,7 +67,7 @@ entries:
 
   - id: databases
     category: Databases
-    icon: "\U0001F5C4\uFE0F"
+    icon: "🗄️"
     skills:
       - name: PostgreSQL
         proficiency: expert
@@ -88,7 +88,7 @@ entries:
 
   - id: cloud
     category: Cloud and Infrastructure
-    icon: "\u2601\uFE0F"
+    icon: "☁️"
     skills:
       - name: AWS
         proficiency: intermediate
@@ -115,7 +115,7 @@ entries:
 
   - id: testing
     category: Testing and Automation
-    icon: "\U0001F9EA"
+    icon: "🧪"
     skills:
       - name: Selenium
         proficiency: expert
@@ -141,7 +141,7 @@ entries:
 
   - id: frontend
     category: Frontend
-    icon: "\U0001F3A8"
+    icon: "🎨"
     skills:
       - name: Vanilla JavaScript
         proficiency: expert
@@ -162,7 +162,7 @@ entries:
 
   - id: tools
     category: Tools and Practices
-    icon: "\U0001F6E0\uFE0F"
+    icon: "🛠️"
     skills:
       - name: Git
         proficiency: expert
