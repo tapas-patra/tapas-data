@@ -105,6 +105,19 @@ def build_payload(sources: list[dict]) -> dict:
     return {"sources": payload_sources}
 
 
+def wipe_all() -> dict:
+    """Wipe all documents from Supabase via /admin/reindex (full reset)."""
+    url = f"{BACKEND_URL}/admin/wipe"
+    headers = {
+        "Authorization": f"Bearer {ADMIN_TOKEN}",
+        "Content-Type": "application/json",
+    }
+    print(f"\n  Wiping all data via {url}...")
+    resp = requests.post(url, headers=headers, timeout=30)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def sync(payload: dict) -> dict:
     """POST the sync payload to the backend."""
     url = f"{BACKEND_URL}/admin/sync"
@@ -119,8 +132,14 @@ def sync(payload: dict) -> dict:
 
 
 def main():
+    full_reindex = "--full" in sys.argv
+
     print("tapas-data sync")
     print("=" * 40)
+    if full_reindex:
+        print("MODE: Full reindex (wipe + re-embed all)")
+    else:
+        print("MODE: Incremental (diff-based)")
 
     if not ADMIN_TOKEN:
         print("ERROR: ADMIN_REINDEX_TOKEN not set")
@@ -135,6 +154,10 @@ def main():
 
     total_entries = sum(len(s["entries"]) for s in sources)
     print(f"\nTotal: {len(sources)} sources, {total_entries} entries")
+
+    if full_reindex:
+        result = wipe_all()
+        print(f"  Wiped {result.get('deleted', 0)} existing documents")
 
     payload = build_payload(sources)
     result = sync(payload)

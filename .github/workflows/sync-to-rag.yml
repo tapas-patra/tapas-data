@@ -6,6 +6,11 @@ on:
     paths:
       - "*.yaml"
   workflow_dispatch:
+    inputs:
+      full_reindex:
+        description: "Wipe all data and re-embed everything"
+        type: boolean
+        default: false
 
 jobs:
   sync:
@@ -24,4 +29,9 @@ jobs:
         env:
           BACKEND_URL: ${{ secrets.BACKEND_URL }}
           ADMIN_REINDEX_TOKEN: ${{ secrets.ADMIN_REINDEX_TOKEN }}
-        run: python scripts/sync.py
+        run: |
+          if [ "${{ inputs.full_reindex }}" = "true" ]; then
+            python scripts/sync.py --full
+          else
+            python scripts/sync.py
+          fi
