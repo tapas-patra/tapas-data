@@ -94,7 +94,7 @@ Go to **Actions → Sync Data to RAG → Run workflow**:
 
 ```bash
 export ADMIN_REINDEX_TOKEN="your-token"
-export BACKEND_URL="https://***wk.onrender.com"
+export BACKEND_URL="your-backend-url"
 
 pip install -r scripts/requirements.txt
 
@@ -111,7 +111,7 @@ python scripts/sync.py --full
 
 | Secret | Value |
 |--------|-------|
-| `BACKEND_URL` | Backend API URL |
+| `BACKEND_URL` | Your backend API URL |
 | `ADMIN_REINDEX_TOKEN` | Same token configured in the backend environment |
 
 ### Backend Endpoints Used
