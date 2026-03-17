@@ -105,28 +105,20 @@ def build_payload(sources: list[dict]) -> dict:
     return {"sources": payload_sources}
 
 
-def wipe_all() -> dict:
-    """Wipe all documents from Supabase via /admin/reindex (full reset)."""
-    url = f"{BACKEND_URL}/admin/wipe"
-    headers = {
-        "Authorization": f"Bearer {ADMIN_TOKEN}",
-        "Content-Type": "application/json",
-    }
-    print(f"\n  Wiping all data via {url}...")
-    resp = requests.post(url, headers=headers, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
-
-
-def sync(payload: dict) -> dict:
+def sync(payload: dict, wipe_first: bool = False) -> dict:
     """POST the sync payload to the backend."""
     url = f"{BACKEND_URL}/admin/sync"
     headers = {
         "Authorization": f"Bearer {ADMIN_TOKEN}",
         "Content-Type": "application/json",
     }
-    print(f"\n  Syncing to {url}...")
-    resp = requests.post(url, json=payload, headers=headers, timeout=120)
+    if wipe_first:
+        payload["wipe_first"] = True
+        print(f"\n  Full sync (wipe + re-embed) to {url}...")
+    else:
+        print(f"\n  Incremental sync to {url}...")
+
+    resp = requests.post(url, json=payload, headers=headers, timeout=300)
     resp.raise_for_status()
     return resp.json()
 
@@ -155,19 +147,22 @@ def main():
     total_entries = sum(len(s["entries"]) for s in sources)
     print(f"\nTotal: {len(sources)} sources, {total_entries} entries")
 
-    if full_reindex:
-        result = wipe_all()
-        print(f"  Wiped {result.get('deleted', 0)} existing documents")
-
     payload = build_payload(sources)
-    result = sync(payload)
+    result = sync(payload, wipe_first=full_reindex)
 
     print(f"\nSync result:")
     print(f"  Inserted: {result.get('inserted', 0)}")
     print(f"  Updated:  {result.get('updated', 0)}")
     print(f"  Deleted:  {result.get('deleted', 0)}")
     print(f"  Skipped:  {result.get('skipped', 0)}")
+    print(f"  Errors:   {result.get('errors', 0)}")
     print(f"  Embeddings used: {result.get('embeddings_used', 0)}")
+    if result.get("wiped"):
+        print(f"  Wiped:    {result['wiped']} (before sync)")
+
+    if result.get("errors", 0) > 0:
+        print("\nWARNING: Some entries failed to sync. Check backend logs.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
