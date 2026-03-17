@@ -111,7 +111,7 @@ python scripts/sync.py --full
 
 | Secret | Value |
 |--------|-------|
-| `BACKEND_URL` | Backend API URL (e.g., `https://portfolio-bot-5pwk.onrender.com`) |
+| `BACKEND_URL` | Backend API URL |
 | `ADMIN_REINDEX_TOKEN` | Same token configured in the backend environment |
 
 ### Backend Endpoints Used
