@@ -893,8 +893,16 @@ function renderEntry(entry, filename, index) {
     .filter(([k]) => k !== 'id')
     .map(([k, v]) => {
       let display = v;
-      if (Array.isArray(v)) display = v.join(', ');
-      else if (typeof v === 'string') display = v.length > 200 ? v.slice(0, 200) + '...' : v;
+      if (Array.isArray(v) && v.length > 0 && typeof v[0] === 'object') {
+        // Array of objects (e.g., skills) — show as compact summary
+        display = v.map(item => item.name || item.id || JSON.stringify(item)).join(', ');
+      } else if (Array.isArray(v)) {
+        display = v.join(', ');
+      } else if (typeof v === 'object' && v !== null) {
+        display = JSON.stringify(v);
+      } else if (typeof v === 'string') {
+        display = v.length > 200 ? v.slice(0, 200) + '...' : v;
+      }
       return `<div class="entry-field">
         <span class="entry-field-key">${esc(k)}</span>
         <span class="entry-field-val">${esc(String(display).trim())}</span>
@@ -932,9 +940,16 @@ function openEditModal(filename, index) {
       inputHtml = `<input class="form-input" data-key="${esc(key)}" value="${esc(String(val))}" readonly style="opacity:0.5;cursor:not-allowed">`;
     } else if (typeof val === 'string' && val.length > 60) {
       inputHtml = `<textarea class="form-textarea" data-key="${esc(key)}" rows="4">${esc(String(val).trim())}</textarea>`;
+    } else if (Array.isArray(val) && val.length > 0 && typeof val[0] === 'object') {
+      // Array of objects — edit as JSON
+      inputHtml = `<textarea class="form-textarea form-json" data-key="${esc(key)}" data-type="json-array" rows="6">${esc(JSON.stringify(val, null, 2))}</textarea>
+        <span class="form-hint">JSON array of objects</span>`;
     } else if (Array.isArray(val)) {
       inputHtml = `<input class="form-input" data-key="${esc(key)}" data-type="array" value="${esc(val.join(', '))}">
         <span class="form-hint">Comma-separated values</span>`;
+    } else if (typeof val === 'boolean') {
+      inputHtml = `<input class="form-input" data-key="${esc(key)}" data-type="boolean" value="${val}">
+        <span class="form-hint">true or false</span>`;
     } else {
       inputHtml = `<input class="form-input" data-key="${esc(key)}" value="${esc(String(val))}">`;
     }
@@ -1038,8 +1053,12 @@ async function saveEntry(filename, index) {
     const key = input.dataset.key;
     if (key === 'id') return;
     let val = (input.value || '').trim();
-    if (input.dataset.type === 'array') {
+    if (input.dataset.type === 'json-array') {
+      try { val = JSON.parse(val); } catch { toast('Invalid JSON for ' + key, 'error'); return; }
+    } else if (input.dataset.type === 'array') {
       val = val.split(',').map(s => s.trim()).filter(Boolean);
+    } else if (input.dataset.type === 'boolean') {
+      val = val === 'true';
     }
     updated[key] = val;
   });
