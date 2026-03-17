@@ -1,0 +1,87 @@
+source: awards
+label: Awards & Recognition
+
+summary:
+  total: 19
+  period: "2021-2025"
+  highlight: "Two consecutive 5/5 Outstanding Performance Ratings"
+
+organizations:
+  - name: Wipro Technologies
+    period: "2021-2025"
+    awards:
+      - id: rookie-rockstar
+        name: Rookie Rockstar — Campus
+        times: 1
+        image: images/awards/rookie-rockstar.png
+        desc: >
+          Recognized for exceptional expertise and problem-solving ability in multi-dependent
+          radio automation during my first year at Wipro. This award is given to top-performing
+          campus hires who demonstrate outstanding technical capabilities.
+
+      - id: extraordinaire
+        name: Extraordinaire
+        times: 2
+        image: images/awards/extraordinary.png
+        desc: >
+          Awarded twice for exceptional contributions to automation framework development and
+          architecture. Recognized for designing scalable solutions that significantly improved
+          team productivity and test coverage.
+
+      - id: inspiring-performance
+        name: Inspiring Performance
+        times: 3
+        image: images/awards/inspiring.png
+        desc: >
+          Received three times for outstanding backend tool development and cross-team
+          collaboration. Acknowledged for building production tools like TestRail Insight
+          and RTM Helper that eliminated manual processes.
+
+      - id: victory-league
+        name: Victory League
+        times: 1
+        image: images/awards/victory_league.png
+        desc: >
+          Awarded for leading successful project deliveries and hitting critical milestones
+          on time. Recognized for coordinating cross-functional teams to deliver high-quality
+          automation solutions.
+
+      - id: beyond-call-of-duty
+        name: Beyond the Call of Duty
+        times: 3
+        image: images/awards/beyond_call_of_duty.png
+        desc: >
+          Received three times for going above and beyond in solving critical technical
+          challenges. Recognized for volunteering on high-priority issues, building tools
+          outside core responsibilities, and mentoring teammates.
+
+      - id: demonstrating-stewardship
+        name: Demonstrating Stewardship
+        times: 2
+        image: images/awards/demonstrating_stewardship.png
+        desc: >
+          Awarded twice for exemplary leadership and mentoring contributions. Recognized
+          for guiding 6+ junior engineers, conducting structured knowledge transfer sessions,
+          and driving best practices across the team.
+
+      - id: being-responsive
+        name: Being Responsive
+        times: 2
+        image: images/awards/being_responsive.png
+        desc: >
+          Received twice for exceptional responsiveness and agility in adapting to changing
+          requirements. Recognized for quick turnarounds on critical bug fixes and proactive
+          communication with stakeholders.
+
+      - id: always-communicating
+        name: Always Communicating
+        times: 5
+        image: images/awards/always_communicating.png
+        desc: >
+          Awarded five times — the most frequent recognition. Acknowledged for transparent,
+          proactive communication and knowledge sharing across teams. Consistently praised
+          for keeping stakeholders informed and documenting processes.
+
+  # - name: Setu by Pine Labs
+  #   period: "2025-present"
+  #   awards: []
