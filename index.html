@@ -748,6 +748,7 @@ async function showApp() {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').classList.add('active');
   await loadAllFiles();
+  resumeActiveRunOnLoad();
 }
 
 // ── GitHub API ──
@@ -1117,11 +1118,26 @@ async function commitFile(filename, message) {
 document.getElementById('btn-sync').addEventListener('click', () => triggerWorkflow(false));
 document.getElementById('btn-full-reindex').addEventListener('click', () => triggerWorkflow(true));
 
+function saveActiveRun(runData) {
+  localStorage.setItem('tapasdata-active-run', JSON.stringify(runData));
+}
+
+function getActiveRun() {
+  try { return JSON.parse(localStorage.getItem('tapasdata-active-run')); } catch { return null; }
+}
+
+function clearActiveRun() {
+  localStorage.removeItem('tapasdata-active-run');
+}
+
 async function triggerWorkflow(fullReindex) {
   const label = fullReindex ? 'Full Reindex' : 'Incremental Sync';
   showStatus(`Triggering ${label}...`);
 
   try {
+    // Capture timestamp before triggering so we can find the right run
+    const triggeredAt = new Date().toISOString();
+
     const resp = await ghPost(`/repos/${REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`, {
       ref: BRANCH,
       inputs: { full_reindex: String(fullReindex) },
@@ -1132,10 +1148,10 @@ async function triggerWorkflow(fullReindex) {
       throw new Error(err.message || `HTTP ${resp.status}`);
     }
 
+    saveActiveRun({ label, triggeredAt, startedAt: Date.now() });
     toast(`${label} triggered`, 'success');
     showStatus(`${label} triggered — waiting for run...`);
 
-    // Poll for workflow status
     setTimeout(() => pollWorkflowStatus(), 3000);
   } catch (e) {
     toast(`Failed to trigger: ${e.message}`, 'error');
@@ -1143,40 +1159,74 @@ async function triggerWorkflow(fullReindex) {
   }
 }
 
+let pollTimer = null;
+
 async function pollWorkflowStatus() {
-  let attempts = 0;
-  const maxAttempts = 40; // ~2 minutes
+  if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
 
-  const poll = async () => {
-    try {
-      const resp = await ghFetch(`/repos/${REPO}/actions/runs?per_page=1&branch=${BRANCH}`);
-      if (!resp.ok) return;
-      const data = await resp.json();
-      const run = data.workflow_runs?.[0];
+  const activeRun = getActiveRun();
+  if (!activeRun) return;
 
-      if (!run) return;
+  const elapsed = Date.now() - activeRun.startedAt;
+  if (elapsed > 300000) { // 5 min timeout
+    showStatus(`${activeRun.label} — timed out`, 'error');
+    clearActiveRun();
+    return;
+  }
 
-      if (run.status === 'completed') {
-        if (run.conclusion === 'success') {
-          showStatus('Sync completed successfully', 'success');
-          toast('Sync completed', 'success');
-        } else {
-          showStatus(`Sync failed: ${run.conclusion}`, 'error');
-          toast(`Sync ${run.conclusion}`, 'error');
-        }
-        return;
-      }
+  try {
+    const resp = await ghFetch(`/repos/${REPO}/actions/runs?per_page=5&branch=${BRANCH}`);
+    if (!resp.ok) { pollTimer = setTimeout(pollWorkflowStatus, 5000); return; }
+    const data = await resp.json();
 
-      showStatus(`Running: ${run.status}...`);
-      attempts++;
-      if (attempts < maxAttempts) setTimeout(poll, 3000);
-      else showStatus('Timed out waiting for run', 'error');
-    } catch (e) {
-      showStatus(`Poll error: ${e.message}`, 'error');
+    // Find the run that was created after our trigger
+    const run = data.workflow_runs?.find(r =>
+      new Date(r.created_at) >= new Date(activeRun.triggeredAt)
+    ) || data.workflow_runs?.[0];
+
+    if (!run) {
+      showStatus(`${activeRun.label} — queued, waiting...`);
+      pollTimer = setTimeout(pollWorkflowStatus, 3000);
+      return;
     }
-  };
 
-  poll();
+    if (run.status === 'completed') {
+      clearActiveRun();
+      if (run.conclusion === 'success') {
+        showStatus(`${activeRun.label} completed successfully`, 'success');
+        toast(`${activeRun.label} completed`, 'success');
+      } else {
+        showStatus(`${activeRun.label} failed: ${run.conclusion}`, 'error');
+        toast(`${activeRun.label} ${run.conclusion}`, 'error');
+      }
+      return;
+    }
+
+    // Still running
+    const statusLabel = run.status === 'queued' ? 'queued' : run.status === 'in_progress' ? 'running' : run.status;
+    const mins = Math.floor(elapsed / 60000);
+    const secs = Math.floor((elapsed % 60000) / 1000);
+    const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+    showStatus(`${activeRun.label} — ${statusLabel} (${timeStr})`);
+    pollTimer = setTimeout(pollWorkflowStatus, 3000);
+  } catch (e) {
+    showStatus(`${activeRun.label} — checking...`);
+    pollTimer = setTimeout(pollWorkflowStatus, 5000);
+  }
+}
+
+function resumeActiveRunOnLoad() {
+  const activeRun = getActiveRun();
+  if (!activeRun) return;
+
+  const elapsed = Date.now() - activeRun.startedAt;
+  if (elapsed > 300000) {
+    clearActiveRun();
+    return;
+  }
+
+  showStatus(`${activeRun.label} — resuming status check...`);
+  pollWorkflowStatus();
 }
 
 // ── Status Bar ──
@@ -1191,6 +1241,11 @@ function showStatus(text, state) {
 
 document.getElementById('status-close').addEventListener('click', () => {
   document.getElementById('status-bar').classList.remove('active');
+  // Only clear the active run if it's completed (success/error)
+  const dot = document.getElementById('status-dot');
+  if (dot.classList.contains('success') || dot.classList.contains('error')) {
+    clearActiveRun();
+  }
 });
 
 // ── Toast ──
