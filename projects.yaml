@@ -1,0 +1,98 @@
+source: projects
+label: Projects
+
+entries:
+  - id: tapasos
+    name: TapasOS — AI-First Portfolio Operating System
+    tech: [Vanilla JavaScript, HTML5, CSS3, Canvas API, ES Modules]
+    category: [Full-Stack, AI, Frontend]
+    text: >
+      I built TapasOS as a developer portfolio disguised as a fully functional browser-based
+      operating system. Instead of a traditional portfolio, visitors interact with an OS-like
+      environment featuring a boot sequence, window manager, dock, menubar, and 9 applications.
+      Key features I built: Custom boot sequence with POST messages and progress bar.
+      Window manager with drag, resize, minimize, maximize, close. macOS-style dock with
+      magnification and app launching. Spotlight launcher (Cmd+Space) with fuzzy search.
+      Canvas-based particle wallpaper with hover effects, shooting stars, nebulae, click ripples.
+      AI chat assistant powered by RAG (Tapas.ai app). Voice interface for mobile users.
+      Responsive design — desktop OS on large screens, mobile-native voice UI on phones.
+      Classic HTML portfolio view that auto-updates from data.json.
+      Service worker for offline capability.
+
+  - id: tapasos-backend
+    name: TapasOS Backend — AI-Powered FastAPI Backend
+    tech: [Python, FastAPI, Supabase pgvector, Neon Postgres, Anthropic Claude, Mistral, SSE]
+    category: [Backend, AI, RAG]
+    text: >
+      I built the production backend for TapasOS featuring: SSE streaming chat endpoint with
+      RAG context injection. Pluggable AI provider architecture I designed (Claude, OpenAI,
+      Gemini, Mistral, Ollama). Hybrid search RAG pipeline: vector similarity + full-text search
+      + keyword fallback. AI-powered resume generator with PDF output (ReportLab).
+      Admin endpoints for RAG re-indexing and GitHub content commits.
+      JWT authentication via Cloudflare Workers.
+      Neon serverless Postgres for structured data (projects, skills, sessions).
+      Supabase pgvector for document embeddings and similarity search.
+
+  - id: tapasos-auth
+    name: TapasOS Auth Worker — Cloudflare Edge Authentication
+    tech: [Cloudflare Workers, JavaScript, GitHub OAuth, JWT]
+    category: [Infrastructure, Security]
+    text: >
+      I created the edge authentication layer for TapasOS: GitHub OAuth flow for admin login.
+      JWT token issuance and validation. Admin API proxy to backend.
+      Service token verification for inter-service communication.
+
+  - id: ui-auto-gen
+    name: UI-Auto-gen
+    tech: [Python]
+    category: [Developer Tools, Automation]
+    text: >
+      I built a Python tool that automatically generates UI properties and their unit tests
+      from Android layouts. It increased UI automation efficiency by 40% and reduced manual
+      setup time for test automation.
+
+  - id: rtm-helper
+    name: RTM Helper
+    tech: [Python, TestRail API, Jira API]
+    category: [Developer Tools, Testing]
+    text: >
+      I built this to streamline backward traceability by linking TestRail cases to Jira
+      requirements, ensuring complete audit and reporting coverage. It eliminated 100% of
+      manual effort in RTM traceability processes.
+
+  - id: test-crafter
+    name: Test-crafter
+    tech: [Python, TestRail API]
+    category: [Developer Tools, Testing]
+    text: >
+      I built this productivity tool to reduce administrative overhead by enabling bulk creation
+      of test runs, plans, and milestones across multiple TestRail projects.
+
+  - id: rail-bridge
+    name: Rail-Bridge
+    tech: [Python, TestRail API]
+    category: [Developer Tools, Testing]
+    text: >
+      I designed this utility to migrate test cases, suites, and results between different
+      TestRail server instances, facilitating seamless project transitions and eliminating
+      manual migration efforts.
+
+  - id: testrail-insight
+    name: Testrail Insight
+    tech: [Python, TestRail API, Data Visualization]
+    category: [Developer Tools, Analytics]
+    text: >
+      I built this custom reporting solution to overcome TestRail API limitations by aggregating
+      data from unlimited test runs to generate comprehensive quality insight reports with
+      advanced analytics.
+
+  - id: auto-framework-wipro
+    name: Automation Framework — Wipro (Automotive)
+    tech: [Python, Slash Framework, Appium, Selenium, CAN Protocol, YAML]
+    category: [Test Automation, Automotive]
+    text: >
+      I built this enterprise automation framework from scratch for automotive infotainment
+      module testing. End-to-end framework architecture and HLD design. Data-Driven Testing
+      with YAML data sources. Functional, regression, and integration test coverage.
+      CAN Protocol and ECU testing integration. Reduced manual testing by 60%, improved
+      coverage by 35%.

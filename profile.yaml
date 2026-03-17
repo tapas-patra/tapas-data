@@ -1,0 +1,36 @@
+source: profile
+label: About Me
+
+entries:
+  - id: intro
+    title: Introduction
+    text: >
+      I'm Tapas Kumar Patra, an SDET II at Setu by Pine Labs, based in Bengaluru, India.
+      I have 5+ years of professional experience specializing in backend engineering,
+      AI/LLM integration, test automation, and developer tooling. I joined Setu by Pine Labs
+      in January 2026 after spending 4+ years at Wipro Technologies where I evolved from
+      automation engineering into full-stack development.
+
+  - id: current-role
+    title: Current Role
+    text: >
+      I currently work as SDET II at Setu by Pine Labs (joined January 2026), a fintech
+      company building payment infrastructure for India. I also build AI-powered applications,
+      RAG pipelines, and developer tools in my personal time. My flagship project is TapasOS —
+      an AI-first portfolio disguised as a fully functional browser-based operating system,
+      featuring a RAG-powered chatbot, window manager, and real-time AI assistant.
+
+  - id: contact
+    title: Contact Information
+    text: >
+      Email: tapas.patra0406@gmail.com. Location: Bengaluru, India.
+      Portfolio: https://tapas-patra.github.io.
+      LinkedIn: https://www.linkedin.com/in/tapas-kumar-patra/.
+      GitHub: https://www.github.com/tapas-patra.
+
+  - id: services
+    title: Services and Expertise
+    text: >
+      Backend API Development (FastAPI, Python). AI/LLM Integration and RAG Pipelines.
+      Test Automation Framework Design. Developer Tooling and Productivity Tools.
+      Automotive Domain Testing.

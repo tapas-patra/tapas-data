@@ -1,0 +1,64 @@
+source: skills
+label: Technical Skills
+
+entries:
+  - id: languages
+    category: Languages
+    text: >
+      Python (Advanced) — my primary language for backend, automation, and AI.
+      JavaScript/TypeScript — frontend, Node.js, Cloudflare Workers.
+      Java — enterprise development.
+      SQL — PostgreSQL, complex queries, database design.
+
+  - id: backend
+    category: Backend and APIs
+    text: >
+      FastAPI — async Python APIs, SSE streaming, middleware.
+      Node.js — server-side JavaScript.
+      REST API design and implementation.
+      GraphQL. WebSockets for real-time communication.
+
+  - id: ai-ml
+    category: AI and Machine Learning
+    text: >
+      LLM Integration — Claude API, OpenAI, Gemini, Mistral, Ollama.
+      RAG (Retrieval-Augmented Generation) — pgvector, embedding pipelines, hybrid search.
+      Prompt Engineering — system prompts, context injection, persona design.
+      AI Provider Abstraction — pluggable multi-provider architecture.
+
+  - id: databases
+    category: Databases
+    text: >
+      PostgreSQL — Neon serverless, Supabase.
+      pgvector — vector similarity search, HNSW indexing.
+      MongoDB. Redis — caching.
+
+  - id: cloud
+    category: Cloud and Infrastructure
+    text: >
+      Cloudflare Workers — edge auth, JWT, OAuth proxy.
+      AWS — cloud services. GitHub Actions — CI/CD, automated workflows.
+      Docker — containerization.
+
+  - id: testing
+    category: Testing and Automation
+    text: >
+      Selenium, Appium — web and mobile automation.
+      Playwright — modern browser automation.
+      Slash Framework — Python test automation.
+      TestRail — test management, API integration.
+      Data-Driven Testing with YAML.
+
+  - id: frontend
+    category: Frontend
+    text: >
+      Vanilla JavaScript — ES modules, Canvas API, DOM manipulation.
+      HTML5/CSS3 — responsive design, CSS variables, animations.
+      No-framework approach — lightweight, performant UIs.
+
+  - id: tools
+    category: Tools and Practices
+    text: >
+      Git — version control, branching strategies.
+      Jira — project management, defect tracking.
+      CI/CD pipeline design. Code review and quality assurance.

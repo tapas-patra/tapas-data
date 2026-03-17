@@ -1,0 +1,38 @@
+source: experience
+label: Work Experience
+
+entries:
+  - id: setu-sdet2
+    company: Setu by Pine Labs
+    role: SDET II
+    period: January 2026 - Present
+    location: Bengaluru, India
+    text: >
+      I work at Setu by Pine Labs, a fintech company building payment infrastructure for India.
+      I joined as SDET II in January 2026.
+
+  - id: wipro-se
+    company: Wipro Technologies
+    role: Software Engineer
+    period: 2021 - December 2025
+    location: Bengaluru, India
+    text: >
+      I architected and implemented a Python-based automation framework from scratch for
+      automotive infotainment modules, reducing manual testing efforts by over 60%.
+      I designed and executed comprehensive test plans covering functional, regression, and
+      integration testing using Data-Driven Testing (DDT) with YAML data sources, improving
+      test coverage by 35%. I served as module owner, leading code reviews and ensuring
+      adherence to best practices across the team. I built internal developer tools that
+      increased automation efficiency by 40%. I specialized in automotive domain: CAN Protocol,
+      ECU Testing, AUTOSAR Concepts, infotainment module testing.
+
+  - id: independent-projects
+    company: Independent
+    role: Full-Stack Developer
+    period: 2024 - Present
+    text: >
+      I built TapasOS — a full browser-based operating system as an AI-first portfolio.
+      I developed a RAG-powered chatbot backend with FastAPI, pgvector, and multi-provider AI support.
+      I created Cloudflare Workers for edge authentication (GitHub OAuth, JWT).
+      I designed a pluggable AI provider architecture supporting 5 providers (Claude, OpenAI,
+      Gemini, Mistral, Ollama).

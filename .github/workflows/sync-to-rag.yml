@@ -1,0 +1,27 @@
+name: Sync Data to RAG
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "*.yaml"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Sync to backend
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          ADMIN_REINDEX_TOKEN: ${{ secrets.ADMIN_REINDEX_TOKEN }}
+        run: python scripts/sync.py

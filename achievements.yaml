@@ -1,0 +1,16 @@
+source: achievements
+label: Achievements and Impact
+
+entries:
+  - id: performance-awards
+    title: Performance Awards
+    text: >
+      I've received 19 performance awards over 4 years including 2x Outstanding Performance Rating.
+
+  - id: automation-impact
+    title: Automation Impact
+    text: >
+      I reduced manual testing efforts by over 60% through framework automation.
+      I increased automation efficiency by 40% through custom tooling.
+      I improved test coverage by 35% with data-driven testing strategies.
+      I eliminated 100% manual effort in RTM traceability and test case migration.
