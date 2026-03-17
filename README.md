@@ -94,7 +94,7 @@ Go to **Actions → Sync Data to RAG → Run workflow**:
 
 ```bash
 export ADMIN_REINDEX_TOKEN="your-token"
-export BACKEND_URL="https://portfolio-bot-5pwk.onrender.com"
+export BACKEND_URL="https://***wk.onrender.com"
 
 pip install -r scripts/requirements.txt
 
