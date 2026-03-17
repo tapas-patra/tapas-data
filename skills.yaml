@@ -4,6 +4,8 @@ label: Technical Skills
 entries:
   - id: languages
     category: Languages
+    icon: "\U0001F4BB"
+    from_github: true
     text: >
       Python (Advanced) — my primary language for backend, automation, and AI.
       JavaScript/TypeScript — frontend, Node.js, Cloudflare Workers.
@@ -12,6 +14,26 @@ entries:
 
   - id: backend
     category: Backend and APIs
+    icon: "\u2699\uFE0F"
+    skills:
+      - name: FastAPI
+        proficiency: expert
+        years: 3
+      - name: Node.js
+        proficiency: advanced
+        years: 4
+      - name: Express
+        proficiency: advanced
+        years: 4
+      - name: REST APIs
+        proficiency: expert
+        years: 5
+      - name: GraphQL
+        proficiency: intermediate
+        years: 2
+      - name: Microservices
+        proficiency: advanced
+        years: 3
     text: >
       FastAPI — async Python APIs, SSE streaming, middleware.
       Node.js — server-side JavaScript.
@@ -20,6 +42,23 @@ entries:
 
   - id: ai-ml
     category: AI and Machine Learning
+    icon: "\U0001F9E0"
+    skills:
+      - name: RAG
+        proficiency: advanced
+        years: 1.5
+      - name: LLM Integration
+        proficiency: advanced
+        years: 2
+      - name: Prompt Engineering
+        proficiency: advanced
+        years: 2
+      - name: Embeddings
+        proficiency: advanced
+        years: 1.5
+      - name: Vector Databases
+        proficiency: intermediate
+        years: 1
     text: >
       LLM Integration — Claude API, OpenAI, Gemini, Mistral, Ollama.
       RAG (Retrieval-Augmented Generation) — pgvector, embedding pipelines, hybrid search.
@@ -28,6 +67,20 @@ entries:
 
   - id: databases
     category: Databases
+    icon: "\U0001F5C4\uFE0F"
+    skills:
+      - name: PostgreSQL
+        proficiency: expert
+        years: 4
+      - name: Supabase
+        proficiency: advanced
+        years: 2
+      - name: MongoDB
+        proficiency: intermediate
+        years: 3
+      - name: Redis
+        proficiency: intermediate
+        years: 2
     text: >
       PostgreSQL — Neon serverless, Supabase.
       pgvector — vector similarity search, HNSW indexing.
@@ -35,6 +88,26 @@ entries:
 
   - id: cloud
     category: Cloud and Infrastructure
+    icon: "\u2601\uFE0F"
+    skills:
+      - name: AWS
+        proficiency: intermediate
+        years: 3
+      - name: GitHub Actions
+        proficiency: advanced
+        years: 3
+      - name: Docker
+        proficiency: advanced
+        years: 3
+      - name: Vercel
+        proficiency: advanced
+        years: 2
+      - name: Render
+        proficiency: intermediate
+        years: 1
+      - name: Cloudflare Workers
+        proficiency: intermediate
+        years: 1
     text: >
       Cloudflare Workers — edge auth, JWT, OAuth proxy.
       AWS — cloud services. GitHub Actions — CI/CD, automated workflows.
@@ -42,6 +115,23 @@ entries:
 
   - id: testing
     category: Testing and Automation
+    icon: "\U0001F9EA"
+    skills:
+      - name: Selenium
+        proficiency: expert
+        years: 4
+      - name: Playwright
+        proficiency: advanced
+        years: 2
+      - name: TestRail
+        proficiency: expert
+        years: 3
+      - name: CI/CD Testing
+        proficiency: advanced
+        years: 3
+      - name: Appium
+        proficiency: advanced
+        years: 3
     text: >
       Selenium, Appium — web and mobile automation.
       Playwright — modern browser automation.
@@ -51,6 +141,20 @@ entries:
 
   - id: frontend
     category: Frontend
+    icon: "\U0001F3A8"
+    skills:
+      - name: Vanilla JavaScript
+        proficiency: expert
+        years: 5
+      - name: HTML5/CSS3
+        proficiency: expert
+        years: 5
+      - name: Canvas API
+        proficiency: advanced
+        years: 2
+      - name: Responsive Design
+        proficiency: expert
+        years: 5
     text: >
       Vanilla JavaScript — ES modules, Canvas API, DOM manipulation.
       HTML5/CSS3 — responsive design, CSS variables, animations.
@@ -58,6 +162,23 @@ entries:
 
   - id: tools
     category: Tools and Practices
+    icon: "\U0001F6E0\uFE0F"
+    skills:
+      - name: Git
+        proficiency: expert
+        years: 5
+      - name: VS Code
+        proficiency: expert
+        years: 5
+      - name: Postman
+        proficiency: advanced
+        years: 4
+      - name: Jira
+        proficiency: advanced
+        years: 4
+      - name: Linux
+        proficiency: advanced
+        years: 4
     text: >
       Git — version control, branching strategies.
       Jira — project management, defect tracking.
