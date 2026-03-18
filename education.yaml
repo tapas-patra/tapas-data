@@ -4,17 +4,25 @@ label: Education
 entries:
   - id: mtech-bits
     degree: M.Tech in Software Systems
-    institution: BITS Pilani
-    period: 2021 - 2025
+    institution: BITS Pilani (WILP)
+    period: "2021 - 2025"
     text: >
-      I completed this through Wipro's Work Integrated Learning Program (WILP).
-      4-year program alongside full-time employment (2021-2025).
+      Work Integrated Learning Program — completed alongside professional role at
+      Wipro Technologies (2021-2025).
 
   - id: bca-ncc
     degree: Bachelor of Computer Applications
     institution: N.C. College
-    period: Completed June 2021
-    cgpa: "7.09"
+    period: Completed September 2021
+    cgpa: "6.74"
     text: >
-      Completed June 2021, CGPA: 7.09. I transitioned directly into my professional
+      Completed September 2021. CGPA: 6.74. Transitioned directly into professional
       role at Wipro after graduation.
+
+  - id: hsc
+    degree: Higher Secondary (12th)
+    institution: ""
+    period: Completed 2018
+    percentage: "64.83"
+    text: >
+      Completed 2018. Percentage: 64.83%.

@@ -7,15 +7,38 @@ entries:
     role: SDET II
     period: January 2026 - Present
     location: Bengaluru, India
+    current: true
     text: >
-      I work at Setu by Pine Labs, a fintech company building payment infrastructure for India.
-      I joined as SDET II in January 2026.
+      Building and scaling quality infrastructure at a fintech company powering payment
+      solutions for India. Focus on backend testing, API automation, and CI/CD integration
+      for payment infrastructure services.
 
   - id: wipro-se
     company: Wipro Technologies
-    role: Software Engineer
-    period: 2021 - December 2025
+    role: Software Engineer (Automation)
+    period: October 2021 - December 2025
     location: Bengaluru, India
+    account: Ford Motor Company
+    current: false
+    highlights:
+      - section: Automation Framework Engineering
+        items:
+          - "Architected end-to-end Python automation framework for Android Automotive infotainment — 60% reduction in manual testing, 35% improvement in test coverage"
+          - "Authored 1000+ automated test scripts using Selenium, Appium, and Slash Framework with DDT (YAML)"
+          - "Built UI-Autogen (PySide6): auto-generates 300-500 UI properties and unit tests, 40% faster bootstrapping"
+          - "Module owner — peer reviews for 50+ scripts/month"
+      - section: Backend & Full-Stack Tools
+        items:
+          - "TestRail Insight: Django + PostgreSQL app aggregating 8,000+ test runs for real-time dashboards"
+          - "RTM Helper (PySide2): automated traceability for 6,000+ test cases, eliminated 100% manual RTM"
+          - "Rail-Bridge: migrated 4,000-5,000 test cases between TestRail instances"
+          - "Test-Crafter: bulk creation tool saving QA teams 1-2 hours daily"
+      - section: Leadership & Recognition
+        items:
+          - "Led cross-functional teams of 16-20 engineers — sprint planning, release deliverables"
+          - "Mentored 6 junior engineers through structured knowledge transfer"
+          - "Managed 200+ defects/quarter in Jira across Android Automotive and QNX SYNC 4"
+          - "Received 19 performance awards including 2x Outstanding Performance ratings"
     text: >
       I architected and implemented a Python-based automation framework from scratch for
       automotive infotainment modules, reducing manual testing efforts by over 60%.
@@ -23,16 +46,4 @@ entries:
       integration testing using Data-Driven Testing (DDT) with YAML data sources, improving
       test coverage by 35%. I served as module owner, leading code reviews and ensuring
       adherence to best practices across the team. I built internal developer tools that
-      increased automation efficiency by 40%. I specialized in automotive domain: CAN Protocol,
-      ECU Testing, AUTOSAR Concepts, infotainment module testing.
-
-  - id: independent-projects
-    company: Independent
-    role: Full-Stack Developer
-    period: 2024 - Present
-    text: >
-      I built TapasOS — a full browser-based operating system as an AI-first portfolio.
-      I developed a RAG-powered chatbot backend with FastAPI, pgvector, and multi-provider AI support.
-      I created Cloudflare Workers for edge authentication (GitHub OAuth, JWT).
-      I designed a pluggable AI provider architecture supporting 5 providers (Claude, OpenAI,
-      Gemini, Mistral, Ollama).
+      increased automation efficiency by 40%.
