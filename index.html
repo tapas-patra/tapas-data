@@ -1425,9 +1425,15 @@ function renderAnalytics(events, panel) {
   const errors = events.filter(e => e.event === 'js_error' || e.event === 'promise_error');
   const sessions = events.filter(e => e.event === 'session_end');
 
-  const uniqueIPs = new Set(pageViews.map(e => e.ip)).size;
-  const todayViews = pageViews.filter(e => e.created_at?.startsWith(today)).length;
-  const uniqueFingerprints = new Set(pageViews.map(e => e.props?.fingerprint).filter(Boolean)).size;
+  // Count unique IPs and fingerprints from ALL events (not just page_views)
+  const uniqueIPs = new Set(events.map(e => e.ip).filter(Boolean)).size;
+  const uniqueFingerprints = new Set(events.map(e => e.props?.fingerprint).filter(Boolean)).size;
+
+  // Today's views — use unique sessions today as fallback if no page_view events
+  const todayEvents = events.filter(e => e.created_at?.slice(0, 10) === today);
+  const todayPageViews = todayEvents.filter(e => e.event === 'page_view').length;
+  const todayUniqueSessions = new Set(todayEvents.map(e => e.session_id).filter(Boolean)).size;
+  const todayViews = todayPageViews || todayUniqueSessions;
   const avgDuration = sessions.length > 0
     ? Math.round(sessions.reduce((s, e) => s + (e.props?.duration_s || 0), 0) / sessions.length)
     : 0;
@@ -1469,7 +1475,7 @@ function renderAnalytics(events, panel) {
         <div class="stat-card-label">Today's Views</div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-val">${pageViews.length}</div>
+        <div class="stat-card-val">${pageViews.length || new Set(events.map(e => e.session_id).filter(Boolean)).size}</div>
         <div class="stat-card-label">Total Page Views</div>
       </div>
       <div class="stat-card">
