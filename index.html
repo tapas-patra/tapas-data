@@ -1655,6 +1655,7 @@ function renderFeedback(items, panel) {
           ${f.description ? `<div class="fb-card-desc">${esc(f.description)}</div>` : ''}
           <div class="fb-card-meta">
             ${f.email ? `📧 ${esc(f.email)} · ` : ''}IP: ${esc(f.ip || '—')}
+            ${f.github_issue_url ? ` · <a href="${esc(f.github_issue_url)}" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">#${f.github_issue_number || 'issue'}</a>` : ''}
           </div>
         </div>
       `).join('')}
