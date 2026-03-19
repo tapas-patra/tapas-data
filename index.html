@@ -712,6 +712,17 @@ body::after {
 .fb-badge-in_progress { background:var(--amber-dim); color:var(--amber); }
 .fb-badge-done { background:var(--violet-dim); color:var(--violet-light); }
 .fb-badge-wont_fix { background:var(--glass); color:var(--text-dim); }
+.fb-status-select {
+  font-size:0.65rem; font-weight:600; padding:3px 8px; border-radius:4px;
+  border:1px solid var(--glass-border); cursor:pointer;
+  font-family:var(--font-mono); text-transform:capitalize;
+  outline:none; transition:border-color 0.2s;
+}
+.fb-status-select:hover { border-color:var(--cyan); }
+.fb-status-select.fb-badge-open { background:var(--green-dim); color:var(--green); }
+.fb-status-select.fb-badge-in_progress { background:var(--amber-dim); color:var(--amber); }
+.fb-status-select.fb-badge-done { background:var(--violet-dim); color:var(--violet-light); }
+.fb-status-select.fb-badge-wont_fix { background:var(--glass); color:var(--text-dim); }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
@@ -1649,7 +1660,11 @@ function renderFeedback(items, panel) {
           <div class="fb-card-header">
             <span class="fb-badge fb-badge-${f.type}">${f.type === 'bug' ? '! Bug' : '* Feature'}</span>
             <span class="fb-card-title">${esc(f.title)}</span>
-            <span class="fb-badge-status fb-badge-${f.status || 'open'}">${(f.status || 'open').replace('_', ' ')}</span>
+            <select class="fb-status-select fb-badge-${f.status || 'open'}" data-id="${f.id}" onchange="updateFeedbackStatus(this)">
+              ${['open','in_progress','done','wont_fix'].map(s =>
+                `<option value="${s}" ${(f.status || 'open') === s ? 'selected' : ''}>${s.replace('_', ' ')}</option>`
+              ).join('')}
+            </select>
             <span class="fb-card-time">${f.created_at ? new Date(f.created_at).toLocaleString() : '—'}</span>
           </div>
           ${f.description ? `<div class="fb-card-desc">${esc(f.description)}</div>` : ''}
@@ -1661,6 +1676,33 @@ function renderFeedback(items, panel) {
       `).join('')}
     </div>
   `;
+}
+
+async function updateFeedbackStatus(select) {
+  const id = select.dataset.id;
+  const newStatus = select.value;
+  const token = sessionStorage.getItem('tapasdata-reindex-token');
+  if (!token) { alert('Admin token required'); return; }
+
+  // Update class for color
+  select.className = `fb-status-select fb-badge-${newStatus}`;
+
+  try {
+    const resp = await fetch(`${BACKEND_URL}/feedback/${id}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    select.style.borderColor = 'var(--green)';
+    setTimeout(() => select.style.borderColor = '', 1500);
+  } catch (e) {
+    alert(`Failed to update status: ${e.message}`);
+    select.style.borderColor = 'var(--red)';
+  }
 }
 
 // ── Init ──
