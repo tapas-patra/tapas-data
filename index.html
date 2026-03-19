@@ -788,7 +788,7 @@ let filesCache = {}; // filename → {sha, data, raw}
 
 // ── Auth ──
 function initAuth() {
-  const saved = localStorage.getItem('tapasdata-token');
+  const saved = sessionStorage.getItem('tapasdata-token');
   if (saved) {
     token = saved;
     showApp();
@@ -807,7 +807,7 @@ document.getElementById('auth-btn').addEventListener('click', async () => {
     const resp = await ghFetch('/user', val);
     if (!resp.ok) throw new Error('Invalid token');
     token = val;
-    localStorage.setItem('tapasdata-token', val);
+    sessionStorage.setItem('tapasdata-token', val);
     showApp();
   } catch (e) {
     err.textContent = 'Authentication failed — check token and scopes';
@@ -820,7 +820,7 @@ document.getElementById('auth-token').addEventListener('keydown', (e) => {
 });
 
 document.getElementById('btn-logout').addEventListener('click', () => {
-  localStorage.removeItem('tapasdata-token');
+  sessionStorage.removeItem('tapasdata-token');
   token = '';
   document.getElementById('app').classList.remove('active');
   document.getElementById('auth-screen').style.display = 'flex';
@@ -1222,15 +1222,15 @@ document.getElementById('btn-sync').addEventListener('click', () => triggerWorkf
 document.getElementById('btn-full-reindex').addEventListener('click', () => triggerWorkflow(true));
 
 function saveActiveRun(runData) {
-  localStorage.setItem('tapasdata-active-run', JSON.stringify(runData));
+  sessionStorage.setItem('tapasdata-active-run', JSON.stringify(runData));
 }
 
 function getActiveRun() {
-  try { return JSON.parse(localStorage.getItem('tapasdata-active-run')); } catch { return null; }
+  try { return JSON.parse(sessionStorage.getItem('tapasdata-active-run')); } catch { return null; }
 }
 
 function clearActiveRun() {
-  localStorage.removeItem('tapasdata-active-run');
+  sessionStorage.removeItem('tapasdata-active-run');
 }
 
 async function triggerWorkflow(fullReindex) {
@@ -1391,13 +1391,13 @@ async function loadAnalytics() {
   const leadsPanel = document.getElementById('leads-panel');
 
   try {
-    const reindexToken = localStorage.getItem('tapasdata-reindex-token') || prompt('Enter admin/reindex token for analytics:');
+    const reindexToken = sessionStorage.getItem('tapasdata-reindex-token') || prompt('Enter admin/reindex token for analytics:');
     if (!reindexToken) {
       analyticsPanel.innerHTML = '<div class="empty-state">Admin token required for analytics.</div>';
       leadsPanel.innerHTML = '<div class="empty-state">Admin token required for leads.</div>';
       return;
     }
-    localStorage.setItem('tapasdata-reindex-token', reindexToken);
+    sessionStorage.setItem('tapasdata-reindex-token', reindexToken);
 
     const resp = await fetch(`${BACKEND_URL}/admin/analytics`, {
       headers: { 'Authorization': `Bearer ${reindexToken}` },
