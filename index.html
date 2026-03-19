@@ -723,6 +723,11 @@ body::after {
 .fb-status-select.fb-badge-in_progress { background:var(--amber-dim); color:var(--amber); }
 .fb-status-select.fb-badge-done { background:var(--violet-dim); color:var(--violet-light); }
 .fb-status-select.fb-badge-wont_fix { background:var(--glass); color:var(--text-dim); }
+.fb-card-reason {
+  font-size:0.75rem; color:var(--text-secondary); margin-bottom:6px;
+  padding:6px 10px; background:var(--glass); border-radius:var(--radius-sm);
+  border-left:3px solid var(--violet); line-height:1.5;
+}
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
@@ -1660,7 +1665,7 @@ function renderFeedback(items, panel) {
           <div class="fb-card-header">
             <span class="fb-badge fb-badge-${f.type}">${f.type === 'bug' ? '! Bug' : '* Feature'}</span>
             <span class="fb-card-title">${esc(f.title)}</span>
-            <select class="fb-status-select fb-badge-${f.status || 'open'}" data-id="${f.id}" onchange="updateFeedbackStatus(this)">
+            <select class="fb-status-select fb-badge-${f.status || 'open'}" data-id="${f.id}" data-prev="${f.status || 'open'}" onchange="updateFeedbackStatus(this)">
               ${['open','in_progress','done','wont_fix'].map(s =>
                 `<option value="${s}" ${(f.status || 'open') === s ? 'selected' : ''}>${s.replace('_', ' ')}</option>`
               ).join('')}
@@ -1668,6 +1673,7 @@ function renderFeedback(items, panel) {
             <span class="fb-card-time">${f.created_at ? new Date(f.created_at).toLocaleString() : '—'}</span>
           </div>
           ${f.description ? `<div class="fb-card-desc">${esc(f.description)}</div>` : ''}
+          ${f.status_reason ? `<div class="fb-card-reason"><strong>${esc(STATUS_LABELS[f.status] || f.status)}:</strong> ${esc(f.status_reason)}</div>` : ''}
           <div class="fb-card-meta">
             ${f.email ? `📧 ${esc(f.email)} · ` : ''}IP: ${esc(f.ip || '—')}
             ${f.github_issue_url ? ` · <a href="${esc(f.github_issue_url)}" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">#${f.github_issue_number || 'issue'}</a>` : ''}
@@ -1678,11 +1684,23 @@ function renderFeedback(items, panel) {
   `;
 }
 
+const STATUS_LABELS = { open: 'Reopened', in_progress: 'In Progress', done: 'Completed', wont_fix: "Won't Fix" };
+
 async function updateFeedbackStatus(select) {
   const id = select.dataset.id;
   const newStatus = select.value;
+  const prevStatus = select.dataset.prev;
   const token = sessionStorage.getItem('tapasdata-reindex-token');
-  if (!token) { alert('Admin token required'); return; }
+  if (!token) { alert('Admin token required'); select.value = prevStatus; return; }
+
+  // Prompt for reason
+  const label = STATUS_LABELS[newStatus] || newStatus;
+  const reason = prompt(`Moving to "${label}". Enter a reason (visible to users on GitHub):`);
+  if (reason === null) {
+    // User cancelled — revert
+    select.value = prevStatus;
+    return;
+  }
 
   // Update class for color
   select.className = `fb-status-select fb-badge-${newStatus}`;
@@ -1694,14 +1712,30 @@ async function updateFeedbackStatus(select) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ status: newStatus }),
+      body: JSON.stringify({ status: newStatus, reason: reason.trim() }),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    select.dataset.prev = newStatus;
     select.style.borderColor = 'var(--green)';
     setTimeout(() => select.style.borderColor = '', 1500);
+
+    // Update the reason display inline
+    const card = select.closest('.fb-card');
+    let reasonEl = card.querySelector('.fb-card-reason');
+    if (reason.trim()) {
+      if (!reasonEl) {
+        reasonEl = document.createElement('div');
+        reasonEl.className = 'fb-card-reason';
+        const desc = card.querySelector('.fb-card-desc');
+        const meta = card.querySelector('.fb-card-meta');
+        card.insertBefore(reasonEl, desc ? desc.nextSibling : meta);
+      }
+      reasonEl.innerHTML = `<strong>${esc(label)}:</strong> ${esc(reason.trim())}`;
+    }
   } catch (e) {
     alert(`Failed to update status: ${e.message}`);
-    select.style.borderColor = 'var(--red)';
+    select.value = prevStatus;
+    select.className = `fb-status-select fb-badge-${prevStatus}`;
   }
 }
 
